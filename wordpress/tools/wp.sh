@@ -21,9 +21,11 @@ if ! [ -f /var/www/html/wp-config.php ]; then
 		--admin_user=$WP_ROOT_USER \
 		--admin_password=$WP_ROOT_PASSWORD \
 		--admin_email=$WP_ROOT_EMAIL \
+		--path=/var/www/html
 	wp user create $MYSQL_USER $WP_USER_EMAIL \
 		--user_pass=$MYSQL_PASSWORD \
-		--role=author --allow_root
+		--role=author --allow_root \
+		--path=/var/www/html
 fi
 
 chown -R userwp /var/www/html  && chmod -R 775 /var/www/html
