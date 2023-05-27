@@ -2,7 +2,8 @@ version: "3.8"
 
 services:
   nginx:
-    build: ./nginx
+    build: ./requirements/nginx
+    image: nginx
     container_name: inception_nginx
     ports:
       - 443:443
@@ -11,22 +12,24 @@ services:
     networks:
       - net
     depends_on:
-      - wp
+      - wordpress
     restart: unless-stopped
-  wp:
-    build: ./wordpress
+  wordpress:
+    build: ./requirements/wordpress
+    image: wordpress
     container_name: inception_wp
     volumes:
       - html:/var/www/html
     networks:
       - net
     depends_on:
-      - db
+      - mariadb
     env_file:
       - .env
     restart: unless-stopped
-  db:
-    build: ./mariadb
+  mariadb:
+    build: ./requirements/mariadb
+    image: mariadb
     container_name: inception_db
     volumes:
       - database:/var/lib/mysql
@@ -41,13 +44,13 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/kali/data/html
+      device: /home/apena-ba/data/html
       o: bind
   database:
     driver: local
     driver_opts:
       type: none
-      device: /home/kali/data/database
+      device: /home/apena-ba/data/database
       o: bind
 
 networks:
